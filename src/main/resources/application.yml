@@ -5,7 +5,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     database: POSTGRESQL
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
 #    open-in-view: false

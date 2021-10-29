@@ -7,10 +7,9 @@ services:
     depends_on:
       - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/simplechat
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/simplechat
       - SPRING_DATASOURCE_USERNAME=app
       - SPRING_DATASOURCE_PASSWORD=docker
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
   db:
     image: postgres
