@@ -5,18 +5,28 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-       - db
+      - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/postgres
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/simpleChat
+      - SPRING_DATASOURCE_USERNAME=simpleChatUser
+      - SPRING_DATASOURCE_PASSWORD=chatPassword
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
   db:
     image: postgres
     ports:
       - "5432:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    restart: always
+    volumes:
+      - ./docker:/docker-entrypoint-initdb.d/
     environment:
+      - POSTGRES_USER=root
       - POSTGRES_PASSWORD=password
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=postgres
+      - APP_DB_NAME=simpleChat
+      - APP_DB_USER=simpleChatUser
+      - APP_DB_PASS=chatPassword
